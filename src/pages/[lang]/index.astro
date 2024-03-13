@@ -1,0 +1,46 @@
+---
+import i18next, { t, changeLanguage } from "i18next";
+import Layout from "../../layouts/Layout.astro";
+import { Trans } from "astro-i18next/components";
+
+export async function getStaticPaths() {
+  return [
+    { params: { lang: "fr" } },
+    { params: { lang: "es" } },
+    { params: { lang: "en" } },
+  ];
+}
+
+const { lang } = Astro.params;
+// //const lang = Astro.url.searchParams.get("search")! || "";
+// const search = Astro.url;
+
+// console.log("search", search);
+
+const url = new URL(Astro.url); // Get the current URL object
+const params = url.searchParams; // Access query parameters
+const name = params.get("name");
+console.log("params", lang, "url", url.searchParams);
+---
+
+<Layout lang={lang || ""} title="Welcome to Astro.">
+  <ul>
+    <li><a href=`en`>English</a></li>
+    <li><a href=`fr`>French</a></li>
+  </ul>
+  <h1>{t("site.title")}</h1>
+  <p>{t("site.description")}</p>
+  <Trans i18nKey="superCoolKey">
+    An <a href="https://astro.build" title="Astro website">astro</a> integration
+    of
+    <a href="https://www.i18next.com/" title="i18next website">i18next</a> and utility
+    components to help you translate your astro websites!
+  </Trans>
+</Layout>
+<script>
+  // Access specific parameter values
+  // const name = params.get('name');
+  // const age = params.get('age');
+
+  // Display data (example)
+</script>
